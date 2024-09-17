@@ -1,4 +1,7 @@
-// Package gg provides a simple API for rendering 2D graphics in pure Go.
+// Copyright ©2022 The gg Authors. All rights reserved.
+// Use of this source code is governed by a MIT-style
+// license that can be found in the LICENSE file.
+
 package gg
 
 import (
@@ -77,6 +80,7 @@ type DeviceContext struct {
 	fontHeight    float64
 	matrix        Matrix
 	stack         []*DeviceContext
+	interp        draw.Interpolator
 }
 
 // NewDeviceContext creates a new image.RGBA with the specified width and height
@@ -109,6 +113,7 @@ func NewDeviceContextForRGBA(img *image.RGBA) *DeviceContext {
 		fontFace:      basicfont.Face7x13,
 		fontHeight:    13,
 		matrix:        Identity(),
+		interp:        draw.BiLinear,
 	}
 }
 
@@ -465,7 +470,7 @@ func (dc *DeviceContext) Stroke() {
 }
 
 // FillPreserve fills the current path with the current color. Open subpaths
-// are implicity closed. The path is preserved after this operation.
+// are implicitly closed. The path is preserved after this operation.
 func (dc *DeviceContext) FillPreserve() {
 	var painter raster.Painter
 	if dc.mask == nil {
@@ -484,7 +489,7 @@ func (dc *DeviceContext) FillPreserve() {
 }
 
 // Fill fills the current path with the current color. Open subpaths
-// are implicity closed. The path is cleared after this operation.
+// are implicitly closed. The path is cleared after this operation.
 func (dc *DeviceContext) Fill() {
 	dc.FillPreserve()
 	dc.ClearPath()
@@ -661,6 +666,14 @@ func (dc *DeviceContext) DrawRegularPolygon(n int, x, y, r, rotation float64) {
 	dc.ClosePath()
 }
 
+// SetInterpolator sets the current context's drawing interpolator.
+func (dc *DeviceContext) SetInterpolator(interp draw.Interpolator) {
+	if interp == nil {
+		panic(errors.New("gg: invalid interpolator"))
+	}
+	dc.interp = interp
+}
+
 // DrawImage draws the specified image at the specified point.
 func (dc *DeviceContext) DrawImage(img image.Image, x, y int) {
 	dc.DrawImageAnchored(img, x, y, 0, 0)
@@ -673,18 +686,20 @@ func (dc *DeviceContext) DrawImageAnchored(img image.Image, x, y int, ax, ay flo
 	s := img.Bounds().Size()
 	x -= int(ax * float64(s.X))
 	y -= int(ay * float64(s.Y))
-	transformer := draw.BiLinear
-	fx, fy := float64(x), float64(y)
-	m := dc.matrix.Translate(fx, fy)
-	s2d := f64.Aff3{m.XX, m.XY, m.X0, m.YX, m.YY, m.Y0}
-	if dc.mask == nil {
-		transformer.Transform(dc.img, s2d, img, img.Bounds(), draw.Over, nil)
-	} else {
-		transformer.Transform(dc.img, s2d, img, img.Bounds(), draw.Over, &draw.Options{
+	var (
+		fx  = float64(x)
+		fy  = float64(y)
+		m   = dc.matrix.Translate(fx, fy)
+		s2d = f64.Aff3{m.XX, m.XY, m.X0, m.YX, m.YY, m.Y0}
+		opt *draw.Options
+	)
+	if dc.mask != nil {
+		opt = &draw.Options{
 			DstMask:  dc.mask,
 			DstMaskP: image.Point{},
-		})
+		}
 	}
+	dc.interp.Transform(dc.img, s2d, img, img.Bounds(), draw.Over, opt)
 }
 
 // Text Functions
@@ -728,11 +743,10 @@ func (dc *DeviceContext) drawString(img *image.RGBA, s string, x, y float64) {
 			continue
 		}
 		sr := dr.Sub(dr.Min)
-		transformer := draw.BiLinear
 		fx, fy := float64(dr.Min.X), float64(dr.Min.Y)
 		m := dc.matrix.Translate(fx, fy)
 		s2d := f64.Aff3{m.XX, m.XY, m.X0, m.YX, m.YY, m.Y0}
-		transformer.Transform(d.Dst, s2d, d.Src, sr, draw.Over, &draw.Options{
+		dc.interp.Transform(d.Dst, s2d, d.Src, sr, draw.Over, &draw.Options{
 			SrcMask:  mask,
 			SrcMaskP: maskp,
 		})
@@ -909,10 +923,13 @@ func (dc *DeviceContext) Push() {
 
 // Pop restores the last saved DeviceContext state from the stack.
 func (dc *DeviceContext) Pop() {
-	before := *dc
-	s := dc.stack
-	x, s := s[len(s)-1], s[:len(s)-1]
-	*dc = *x
+	var (
+		before = *dc
+		s      = dc.stack
+		last   *DeviceContext
+	)
+	last, dc.stack = s[len(s)-1], s[:len(s)-1]
+	*dc = *last
 	dc.mask = before.mask
 	dc.strokePath = before.strokePath
 	dc.fillPath = before.fillPath
