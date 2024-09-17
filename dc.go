@@ -11,6 +11,7 @@ import (
 	"image/jpeg"
 	"image/png"
 	"io"
+	"io/fs"
 	"math"
 	"strings"
 
@@ -711,11 +712,35 @@ func (dc *DeviceContext) SetFontFace(fontFace font.Face) {
 
 func (dc *DeviceContext) LoadFontFace(path string, points float64) error {
 	face, err := LoadFontFace(path, points)
-	if err == nil {
-		dc.fontFace = face
-		dc.fontHeight = points * 72 / 96
+	if err != nil {
+		return err
 	}
-	return err
+
+	dc.fontFace = face
+	dc.fontHeight = points * 72 / 96
+	return nil
+}
+
+func (dc *DeviceContext) LoadFontFaceFromFS(fsys fs.FS, path string, points float64) error {
+	face, err := LoadFontFaceFromFS(fsys, path, points)
+	if err != nil {
+		return err
+	}
+
+	dc.fontFace = face
+	dc.fontHeight = points * 72 / 96
+	return nil
+}
+
+func (dc *DeviceContext) LoadFontFaceFromBytes(raw []byte, points float64) error {
+	face, err := LoadFontFaceFromBytes(raw, points)
+	if err != nil {
+		return err
+	}
+
+	dc.fontFace = face
+	dc.fontHeight = points * 72 / 96
+	return nil
 }
 
 func (dc *DeviceContext) FontHeight() float64 {
