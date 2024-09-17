@@ -3,13 +3,13 @@ package main
 import (
 	"math"
 
-	"github.com/fogleman/gg"
+	"github.com/ccpaging/gg"
 )
 
 func main() {
 	const W = 1200
 	const H = 60
-	dc := gg.NewContext(W, H)
+	dc := gg.NewDeviceContext(W, H)
 	// dc.SetHexColor("#FFFFFF")
 	// dc.Clear()
 	dc.ScaleAbout(0.95, 0.75, W/2, H/2)

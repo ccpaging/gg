@@ -45,13 +45,13 @@ func LoadPNG(path string) (image.Image, error) {
 	return png.Decode(file)
 }
 
-func SavePNG(path string, im image.Image) error {
+func SavePNG(path string, img image.Image) error {
 	file, err := os.Create(path)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
-	return png.Encode(file, im)
+	return png.Encode(file, img)
 }
 
 func LoadJPG(path string) (image.Image, error) {
@@ -63,7 +63,7 @@ func LoadJPG(path string) (image.Image, error) {
 	return jpeg.Decode(file)
 }
 
-func SaveJPG(path string, im image.Image, quality int) error {
+func SaveJPG(path string, img image.Image, quality int) error {
 	file, err := os.Create(path)
 	if err != nil {
 		return err
@@ -73,7 +73,7 @@ func SaveJPG(path string, im image.Image, quality int) error {
 	var opt jpeg.Options
 	opt.Quality = quality
 
-	return jpeg.Encode(file, im, &opt)
+	return jpeg.Encode(file, img, &opt)
 }
 
 func imageToRGBA(src image.Image) *image.RGBA {
@@ -127,7 +127,7 @@ func unfix(x fixed.Int26_6) float64 {
 // LoadFontFace is a helper function to load the specified font file with
 // the specified point size. Note that the returned `font.Face` objects
 // are not thread safe and cannot be used in parallel across goroutines.
-// You can usually just use the Context.LoadFontFace function instead of
+// You can usually just use the DeviceContext.LoadFontFace function instead of
 // this package-level function.
 func LoadFontFace(path string, points float64) (font.Face, error) {
 	fontBytes, err := ioutil.ReadFile(path)

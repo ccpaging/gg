@@ -3,7 +3,7 @@ package main
 import (
 	"math/rand"
 
-	"github.com/fogleman/gg"
+	"github.com/ccpaging/gg"
 )
 
 func random() float64 {
@@ -14,7 +14,7 @@ func point() (x, y float64) {
 	return random(), random()
 }
 
-func drawCurve(dc *gg.Context) {
+func drawCurve(dc *gg.DeviceContext) {
 	dc.SetRGBA(0, 0, 0, 0.1)
 	dc.FillPreserve()
 	dc.SetRGB(0, 0, 0)
@@ -22,13 +22,13 @@ func drawCurve(dc *gg.Context) {
 	dc.Stroke()
 }
 
-func drawPoints(dc *gg.Context) {
+func drawPoints(dc *gg.DeviceContext) {
 	dc.SetRGBA(1, 0, 0, 0.5)
 	dc.SetLineWidth(2)
 	dc.Stroke()
 }
 
-func randomQuadratic(dc *gg.Context) {
+func randomQuadratic(dc *gg.DeviceContext) {
 	x0, y0 := point()
 	x1, y1 := point()
 	x2, y2 := point()
@@ -41,7 +41,7 @@ func randomQuadratic(dc *gg.Context) {
 	drawPoints(dc)
 }
 
-func randomCubic(dc *gg.Context) {
+func randomCubic(dc *gg.DeviceContext) {
 	x0, y0 := point()
 	x1, y1 := point()
 	x2, y2 := point()
@@ -62,7 +62,7 @@ func main() {
 		W = 8
 		H = 8
 	)
-	dc := gg.NewContext(S*W, S*H)
+	dc := gg.NewDeviceContext(S*W, S*H)
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	for j := 0; j < H; j++ {

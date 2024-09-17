@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/fogleman/gg"
+	"github.com/ccpaging/gg"
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font/gofont/goregular"
 )
 
 func main() {
 	const S = 400
-	dc := gg.NewContext(S, S)
+	dc := gg.NewDeviceContext(S, S)
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	dc.SetRGB(0, 0, 0)

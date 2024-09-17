@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/fogleman/gg"
+	"github.com/ccpaging/gg"
 )
 
 func main() {
@@ -10,7 +10,7 @@ func main() {
 	const Minor = 10
 	const Major = 100
 
-	dc := gg.NewContext(W, H)
+	dc := gg.NewDeviceContext(W, H)
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 

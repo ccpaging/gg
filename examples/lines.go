@@ -3,13 +3,13 @@ package main
 import (
 	"math/rand"
 
-	"github.com/fogleman/gg"
+	"github.com/ccpaging/gg"
 )
 
 func main() {
 	const W = 1024
 	const H = 1024
-	dc := gg.NewContext(W, H)
+	dc := gg.NewDeviceContext(W, H)
 	dc.SetRGB(0, 0, 0)
 	dc.Clear()
 	for i := 0; i < 1000; i++ {

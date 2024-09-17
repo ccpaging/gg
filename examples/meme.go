@@ -1,10 +1,10 @@
 package main
 
-import "github.com/fogleman/gg"
+import "github.com/ccpaging/gg"
 
 func main() {
 	const S = 1024
-	dc := gg.NewContext(S, S)
+	dc := gg.NewDeviceContext(S, S)
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	if err := dc.LoadFontFace("/Library/Fonts/Impact.ttf", 96); err != nil {

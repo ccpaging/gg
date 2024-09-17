@@ -1,6 +1,6 @@
 package main
 
-import "github.com/fogleman/gg"
+import "github.com/ccpaging/gg"
 
 func main() {
 	im, err := gg.LoadPNG("examples/baboon.png")
@@ -8,7 +8,7 @@ func main() {
 		panic(err)
 	}
 	pattern := gg.NewSurfacePattern(im, gg.RepeatBoth)
-	dc := gg.NewContext(600, 600)
+	dc := gg.NewDeviceContext(600, 600)
 	dc.MoveTo(20, 20)
 	dc.LineTo(590, 20)
 	dc.LineTo(590, 590)

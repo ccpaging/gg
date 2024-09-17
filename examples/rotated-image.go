@@ -1,6 +1,6 @@
 package main
 
-import "github.com/fogleman/gg"
+import "github.com/ccpaging/gg"
 
 func main() {
 	const W = 400
@@ -9,8 +9,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	iw, ih := im.Bounds().Dx(), im.Bounds().Dy()
-	dc := gg.NewContext(W, H)
+	iw, ih := img.Bounds().Dx(), img.Bounds().Dy()
+	dc := gg.NewDeviceContext(W, H)
 	// draw outline
 	dc.SetHexColor("#ff0000")
 	dc.SetLineWidth(1)

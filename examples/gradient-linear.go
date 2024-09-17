@@ -3,11 +3,11 @@ package main
 import (
 	"image/color"
 
-	"github.com/fogleman/gg"
+	"github.com/ccpaging/gg"
 )
 
 func main() {
-	dc := gg.NewContext(500, 400)
+	dc := gg.NewDeviceContext(500, 400)
 
 	grad := gg.NewLinearGradient(20, 320, 400, 20)
 	grad.AddColorStop(0, color.RGBA{0, 255, 0, 255})

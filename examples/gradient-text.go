@@ -3,7 +3,7 @@ package main
 import (
 	"image/color"
 
-	"github.com/fogleman/gg"
+	"github.com/ccpaging/gg"
 )
 
 const (
@@ -12,17 +12,17 @@ const (
 )
 
 func main() {
-	dc := gg.NewContext(W, H)
+	dc := gg.NewDeviceContext(W, H)
 
 	// draw text
 	dc.SetRGB(0, 0, 0)
 	dc.LoadFontFace("/Library/Fonts/Impact.ttf", 128)
 	dc.DrawStringAnchored("Gradient Text", W/2, H/2, 0.5, 0.5)
 
-	// get the context as an alpha mask
+	// get the DeviceContext as an alpha mask
 	mask := dc.AsMask()
 
-	// clear the context
+	// clear the DeviceContext
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 
@@ -32,7 +32,7 @@ func main() {
 	g.AddColorStop(1, color.RGBA{0, 0, 255, 255})
 	dc.SetFillStyle(g)
 
-	// using the mask, fill the context with the gradient
+	// using the mask, fill the DeviceContext with the gradient
 	dc.SetMask(mask)
 	dc.DrawRectangle(0, 0, W, H)
 	dc.Fill()

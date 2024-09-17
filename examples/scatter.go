@@ -3,7 +3,7 @@ package main
 import (
 	"math/rand"
 
-	"github.com/fogleman/gg"
+	"github.com/ccpaging/gg"
 )
 
 func CreatePoints(n int) []gg.Point {
@@ -19,7 +19,7 @@ func CreatePoints(n int) []gg.Point {
 func main() {
 	const S = 1024
 	const P = 64
-	dc := gg.NewContext(S, S)
+	dc := gg.NewDeviceContext(S, S)
 	dc.InvertY()
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()

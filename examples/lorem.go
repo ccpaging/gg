@@ -1,6 +1,6 @@
 package main
 
-import "github.com/fogleman/gg"
+import "github.com/ccpaging/gg"
 
 var lines = []string{
 	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
@@ -14,7 +14,7 @@ var lines = []string{
 func main() {
 	const W = 800
 	const H = 400
-	dc := gg.NewContext(W, H)
+	dc := gg.NewDeviceContext(W, H)
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	dc.SetRGB(0, 0, 0)

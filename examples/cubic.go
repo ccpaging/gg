@@ -1,10 +1,10 @@
 package main
 
-import "github.com/fogleman/gg"
+import "github.com/ccpaging/gg"
 
 func main() {
 	const S = 1000
-	dc := gg.NewContext(S, S)
+	dc := gg.NewDeviceContext(S, S)
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	dc.Translate(S/2, S/2)

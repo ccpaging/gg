@@ -1,9 +1,9 @@
 package main
 
-import "github.com/fogleman/gg"
+import "github.com/ccpaging/gg"
 
 func main() {
-	dc := gg.NewContext(1024, 1024)
+	dc := gg.NewDeviceContext(1024, 1024)
 	dc.DrawCircle(512, 512, 384)
 	dc.Clip()
 	dc.InvertMask()

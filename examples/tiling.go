@@ -1,6 +1,6 @@
 package main
 
-import "github.com/fogleman/gg"
+import "github.com/ccpaging/gg"
 
 func main() {
 	const NX = 4
@@ -9,9 +9,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	w := im.Bounds().Size().X
-	h := im.Bounds().Size().Y
-	dc := gg.NewContext(w*NX, h*NY)
+	w := img.Bounds().Size().X
+	h := img.Bounds().Size().Y
+	dc := gg.NewDeviceContext(w*NX, h*NY)
 	for y := 0; y < NY; y++ {
 		for x := 0; x < NX; x++ {
 			dc.DrawImage(im, x*w, y*h)

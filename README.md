@@ -6,16 +6,16 @@
 
 ## Installation
 
-    go get -u github.com/fogleman/gg
+    go get -u github.com/ccpaging/gg
 
 Alternatively, you may use gopkg.in to grab a specific major-version:
 
-    go get -u gopkg.in/fogleman/gg.v1
+    go get -u gopkg.in/ccpaging/gg.v1
 
 ## Documentation
 
-- godoc: https://godoc.org/github.com/fogleman/gg
-- pkg.go.dev: https://pkg.go.dev/github.com/fogleman/gg?tab=doc
+- godoc: https://godoc.org/github.com/ccpaging/gg
+- pkg.go.dev: https://pkg.go.dev/github.com/ccpaging/gg?tab=doc
 
 ## Hello, Circle!
 
@@ -24,10 +24,10 @@ Look how easy!
 ```go
 package main
 
-import "github.com/fogleman/gg"
+import "github.com/ccpaging/gg"
 
 func main() {
-    dc := gg.NewContext(1000, 1000)
+    dc := gg.NewDeviceContext(1000, 1000)
     dc.DrawCircle(500, 500, 400)
     dc.SetRGB(0, 0, 0)
     dc.Fill()
@@ -37,18 +37,18 @@ func main() {
 
 ## Examples
 
-There are [lots of examples](https://github.com/fogleman/gg/tree/master/examples) included. They're mostly for testing the code, but they're good for learning, too.
+There are [lots of examples](https://github.com/ccpaging/gg/tree/master/examples) included. They're mostly for testing the code, but they're good for learning, too.
 
 ![Examples](http://i.imgur.com/tMFoyzu.png)
 
-## Creating Contexts
+## Creating DeviceContexts
 
-There are a few ways of creating a context.
+There are a few ways of creating a DeviceContext.
 
 ```go
-NewContext(width, height int) *Context
-NewContextForImage(im image.Image) *Context
-NewContextForRGBA(im *image.RGBA) *Context
+NewDeviceContext(width, height int) *DeviceContext
+NewDeviceContextForImage(img image.Image) *DeviceContext
+NewDeviceContextForRGBA(img *image.RGBA) *DeviceContext
 ```
 
 ## Drawing Functions
@@ -66,8 +66,8 @@ DrawArc(x, y, r, angle1, angle2 float64)
 DrawEllipse(x, y, rx, ry float64)
 DrawEllipticalArc(x, y, rx, ry, angle1, angle2 float64)
 DrawRegularPolygon(n int, x, y, r, rotation float64)
-DrawImage(im image.Image, x, y int)
-DrawImageAnchored(im image.Image, x, y int, ax, ay float64)
+DrawImage(img image.Image, x, y int)
+DrawImageAnchored(img image.Image, x, y int, ax, ay float64)
 SetPixel(x, y int)
 
 MoveTo(x, y float64)
@@ -161,7 +161,7 @@ It is often desired to rotate or scale about a point that is not the origin. The
 
 ## Stack Functions
 
-Save and restore the state of the context. These can be nested.
+Save and restore the state of the DeviceContext. These can be nested.
 
 ```go
 Push()
@@ -191,7 +191,7 @@ Radians(degrees float64) float64
 Degrees(radians float64) float64
 LoadImage(path string) (image.Image, error)
 LoadPNG(path string) (image.Image, error)
-SavePNG(path string, im image.Image) error
+SavePNG(path string, img image.Image) error
 ```
 
 ![Separator](http://i.imgur.com/fsUvnPB.png)
@@ -203,11 +203,11 @@ See the output of this example below.
 ```go
 package main
 
-import "github.com/fogleman/gg"
+import "github.com/ccpaging/gg"
 
 func main() {
 	const S = 1024
-	dc := gg.NewContext(S, S)
+	dc := gg.NewDeviceContext(S, S)
 	dc.SetRGBA(0, 0, 0, 0.1)
 	for i := 0; i < 360; i += 15 {
 		dc.Push()

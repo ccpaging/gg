@@ -1,3 +1,4 @@
+//go:build ignore
 // +build ignore
 
 package main
@@ -5,11 +6,11 @@ package main
 import (
 	"image/color"
 
-	"github.com/fogleman/gg"
+	"github.com/ccpaging/gg"
 )
 
 func main() {
-	dc := gg.NewContext(400, 400)
+	dc := gg.NewDeviceContext(400, 400)
 
 	grad1 := gg.NewConicGradient(200, 200, 0)
 	grad1.AddColorStop(0.0, color.Black)
