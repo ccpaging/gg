@@ -161,7 +161,7 @@ It is often desired to rotate or scale about a point that is not the origin. The
 
 ## Stack Functions
 
-Save and restore the state of the DeviceContext. These can be nested.
+Save and restore the state of the device context. These can be nested.
 
 ```go
 Push()
