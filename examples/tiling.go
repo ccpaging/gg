@@ -5,7 +5,7 @@ import "github.com/ccpaging/gg"
 func main() {
 	const NX = 4
 	const NY = 3
-	im, err := gg.LoadPNG("examples/gopher.png")
+	img, err := gg.LoadPNG("examples/gopher.png")
 	if err != nil {
 		panic(err)
 	}
@@ -14,7 +14,7 @@ func main() {
 	dc := gg.NewDeviceContext(w*NX, h*NY)
 	for y := 0; y < NY; y++ {
 		for x := 0; x < NX; x++ {
-			dc.DrawImage(im, x*w, y*h)
+			dc.DrawImage(img, x*w, y*h)
 		}
 	}
 	dc.SavePNG("out.png")

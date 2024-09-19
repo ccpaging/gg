@@ -3,11 +3,11 @@ package main
 import "github.com/ccpaging/gg"
 
 func main() {
-	im, err := gg.LoadPNG("examples/baboon.png")
+	img, err := gg.LoadPNG("examples/baboon.png")
 	if err != nil {
 		panic(err)
 	}
-	pattern := gg.NewSurfacePattern(im, gg.RepeatBoth)
+	pattern := gg.NewSurfacePattern(img, gg.RepeatBoth)
 	dc := gg.NewDeviceContext(600, 600)
 	dc.MoveTo(20, 20)
 	dc.LineTo(590, 20)

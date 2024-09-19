@@ -5,7 +5,6 @@ import (
 	"image"
 	"image/draw"
 	"image/jpeg"
-	_ "image/jpeg"
 	"image/png"
 	"io/fs"
 	"math"
@@ -33,8 +32,8 @@ func LoadImage(path string) (image.Image, error) {
 		return nil, err
 	}
 	defer file.Close()
-	im, _, err := image.Decode(file)
-	return im, err
+	img, _, err := image.Decode(file)
+	return img, err
 }
 
 func LoadPNG(path string) (image.Image, error) {
@@ -70,7 +69,7 @@ func LoadJPG(path string) (image.Image, error) {
 	return jpeg.Decode(file)
 }
 
-func SaveJPG(path string, im image.Image, quality int) error {
+func SaveJPG(path string, img image.Image, quality int) error {
 	file, err := os.Create(path)
 	if err != nil {
 		return err
@@ -80,7 +79,7 @@ func SaveJPG(path string, im image.Image, quality int) error {
 	var opt jpeg.Options
 	opt.Quality = quality
 
-	err = jpeg.Encode(file, im, &opt)
+	err = jpeg.Encode(file, img, &opt)
 	if err != nil {
 		return fmt.Errorf("could not encode JPG to %q: %w", path, err)
 	}

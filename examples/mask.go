@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	im, err := gg.LoadImage("examples/baboon.png")
+	img, err := gg.LoadImage("examples/baboon.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -15,6 +15,6 @@ func main() {
 	dc := gg.NewDeviceContext(512, 512)
 	dc.DrawRoundedRectangle(0, 0, 512, 512, 64)
 	dc.Clip()
-	dc.DrawImage(im, 0, 0)
+	dc.DrawImage(img, 0, 0)
 	dc.SavePNG("out.png")
 }

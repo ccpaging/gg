@@ -795,9 +795,9 @@ func (dc *DeviceContext) DrawStringAnchored(s string, x, y, ax, ay float64) {
 	if dc.mask == nil {
 		dc.drawString(dc.img, s, x, y)
 	} else {
-		im := image.NewRGBA(image.Rect(0, 0, dc.width, dc.height))
-		dc.drawString(im, s, x, y)
-		draw.DrawMask(dc.img, dc.img.Bounds(), im, image.Point{}, dc.mask, image.Point{}, draw.Over)
+		img := image.NewRGBA(image.Rect(0, 0, dc.width, dc.height))
+		dc.drawString(img, s, x, y)
+		draw.DrawMask(dc.img, dc.img.Bounds(), img, image.Point{}, dc.mask, image.Point{}, draw.Over)
 	}
 }
 

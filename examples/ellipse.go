@@ -13,8 +13,8 @@ func main() {
 		dc.Fill()
 		dc.Pop()
 	}
-	if im, err := gg.LoadImage("examples/gopher.png"); err == nil {
-		dc.DrawImageAnchored(im, S/2, S/2, 0.5, 0.5)
+	if img, err := gg.LoadImage("examples/gopher.png"); err == nil {
+		dc.DrawImageAnchored(img, S/2, S/2, 0.5, 0.5)
 	}
 	dc.SavePNG("out.png")
 }

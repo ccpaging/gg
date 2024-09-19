@@ -5,7 +5,7 @@ import "github.com/ccpaging/gg"
 func main() {
 	const W = 400
 	const H = 500
-	im, err := gg.LoadPNG("examples/gopher.png")
+	img, err := gg.LoadPNG("examples/gopher.png")
 	if err != nil {
 		panic(err)
 	}
@@ -21,7 +21,7 @@ func main() {
 	dc.SetLineWidth(2)
 	dc.DrawRectangle(100, 210, float64(iw), float64(ih))
 	dc.Stroke()
-	dc.DrawImage(im, 100, 210)
+	dc.DrawImage(img, 100, 210)
 	// draw image with current matrix applied
 	dc.SetHexColor("#0000ff")
 	dc.SetLineWidth(2)
@@ -29,6 +29,6 @@ func main() {
 	dc.DrawRectangle(100, 0, float64(iw), float64(ih)/2+20.0)
 	dc.StrokePreserve()
 	dc.Clip()
-	dc.DrawImageAnchored(im, 100, 0, 0.0, 0.0)
+	dc.DrawImageAnchored(img, 100, 0, 0.0, 0.0)
 	dc.SavePNG("out.png")
 }
