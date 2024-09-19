@@ -1,11 +1,30 @@
 package main
 
 import (
+	"fmt"
+	"image"
+	"image/png"
 	"math/rand"
+	"os"
 
 	"github.com/ccpaging/gg"
 	"github.com/flopp/go-findfont"
 )
+
+func savePNG(path string, img image.Image) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	err = png.Encode(file, img)
+	if err != nil {
+		return fmt.Errorf("could not encode PNG to %q: %w", path, err)
+	}
+
+	return file.Close()
+}
 
 func CreatePoints(n int) []gg.Point {
 	points := make([]gg.Point, n)
@@ -74,5 +93,5 @@ func main() {
 		panic(err)
 	}
 	dc.DrawStringAnchored("X Axis Title", S/2, S-P/2, 0.5, 0.5)
-	dc.SavePNG("out.png")
+	savePNG("out.png", dc.Image())
 }

@@ -1,6 +1,13 @@
 package main
 
-import "github.com/ccpaging/gg"
+import (
+	"fmt"
+	"image"
+	"image/png"
+	"os"
+
+	"github.com/ccpaging/gg"
+)
 
 var lines = []string{
 	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
@@ -9,6 +16,21 @@ var lines = []string{
 	"consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse",
 	"cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat",
 	"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+}
+
+func savePNG(path string, img image.Image) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	err = png.Encode(file, img)
+	if err != nil {
+		return fmt.Errorf("could not encode PNG to %q: %w", path, err)
+	}
+
+	return file.Close()
 }
 
 func main() {
@@ -24,5 +46,5 @@ func main() {
 		y := H/2 - h*len(lines)/2 + i*h
 		dc.DrawStringAnchored(line, 400, float64(y), 0.5, 0.5)
 	}
-	dc.SavePNG("out.png")
+	savePNG("out.png", dc.Image())
 }

@@ -8,9 +8,6 @@ import (
 	"errors"
 	"image"
 	"image/color"
-	"image/jpeg"
-	"image/png"
-	"io"
 	"io/fs"
 	"math"
 	"strings"
@@ -140,28 +137,6 @@ func (dc *DeviceContext) Width() int {
 // Height returns the height of the image in pixels.
 func (dc *DeviceContext) Height() int {
 	return dc.height
-}
-
-// SavePNG encodes the image as a PNG and writes it to disk.
-func (dc *DeviceContext) SavePNG(path string) error {
-	return SavePNG(path, dc.img)
-}
-
-// SaveJPG encodes the image as a JPG and writes it to disk.
-func (dc *DeviceContext) SaveJPG(path string, quality int) error {
-	return SaveJPG(path, dc.img, quality)
-}
-
-// EncodePNG encodes the image as a PNG and writes it to the provided io.Writer.
-func (dc *DeviceContext) EncodePNG(w io.Writer) error {
-	return png.Encode(w, dc.img)
-}
-
-// EncodeJPG encodes the image as a JPG and writes it to the provided io.Writer
-// in JPEG 4:2:0 baseline format with the given options.
-// Default parameters are used if a nil *jpeg.Options is passed.
-func (dc *DeviceContext) EncodeJPG(w io.Writer, o *jpeg.Options) error {
-	return jpeg.Encode(w, dc.img, o)
 }
 
 // SetDash sets the current dash pattern to use. Call with zero arguments to

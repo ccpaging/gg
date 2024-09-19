@@ -1,8 +1,12 @@
 package main
 
 import (
+	"fmt"
+	"image"
+	"image/png"
 	"math"
 	"math/rand"
+	"os"
 
 	"github.com/ccpaging/gg"
 )
@@ -18,6 +22,21 @@ func Polygon(n int) []Point {
 		result[i] = Point{math.Cos(a), math.Sin(a)}
 	}
 	return result
+}
+
+func savePNG(path string, img image.Image) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	err = png.Encode(file, img)
+	if err != nil {
+		return fmt.Errorf("could not encode PNG to %q: %w", path, err)
+	}
+
+	return file.Close()
 }
 
 func main() {
@@ -47,5 +66,5 @@ func main() {
 		dc.Fill()
 		dc.Pop()
 	}
-	dc.SavePNG("out.png")
+	savePNG("out.png", dc.Image())
 }

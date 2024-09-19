@@ -1,6 +1,28 @@
 package main
 
-import "github.com/ccpaging/gg"
+import (
+	"fmt"
+	"image"
+	"image/png"
+	"os"
+
+	"github.com/ccpaging/gg"
+)
+
+func savePNG(path string, img image.Image) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	err = png.Encode(file, img)
+	if err != nil {
+		return fmt.Errorf("could not encode PNG to %q: %w", path, err)
+	}
+
+	return file.Close()
+}
 
 func main() {
 	const S = 1024
@@ -16,5 +38,5 @@ func main() {
 	if img, err := gg.LoadImage("examples/gopher.png"); err == nil {
 		dc.DrawImageAnchored(img, S/2, S/2, 0.5, 0.5)
 	}
-	dc.SavePNG("out.png")
+	savePNG("out.png", dc.Image())
 }

@@ -1,9 +1,31 @@
 package main
 
-import "github.com/ccpaging/gg"
+import (
+	"fmt"
+	"image"
+	"image/png"
+	"os"
+
+	"github.com/ccpaging/gg"
+)
+
+func savePNG(path string, img image.Image) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	err = png.Encode(file, img)
+	if err != nil {
+		return fmt.Errorf("could not encode PNG to %q: %w", path, err)
+	}
+
+	return file.Close()
+}
 
 func main() {
-	img, err := gg.LoadPNG("../baboon.png")
+	img, err := gg.LoadImage("../baboon.png")
 	if err != nil {
 		panic(err)
 	}
@@ -16,5 +38,5 @@ func main() {
 	dc.ClosePath()
 	dc.SetFillStyle(pattern)
 	dc.Fill()
-	dc.SavePNG("out.png")
+	savePNG("out.png", dc.Image())
 }

@@ -4,10 +4,29 @@
 package main
 
 import (
+	"fmt"
+	"image"
 	"image/color"
+	"image/png"
+	"os"
 
 	"github.com/ccpaging/gg"
 )
+
+func savePNG(path string, img image.Image) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	err = png.Encode(file, img)
+	if err != nil {
+		return fmt.Errorf("could not encode PNG to %q: %w", path, err)
+	}
+
+	return file.Close()
+}
 
 func main() {
 	dc := gg.NewDeviceContext(400, 400)
@@ -35,5 +54,5 @@ func main() {
 	dc.DrawCircle(200, 200, 150)
 	dc.Fill()
 
-	dc.SavePNG("gradient-conic.png")
+	savePNG("gradient-conic.png", dc.Image())
 }

@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"image"
 	"image/draw"
-	"image/jpeg"
-	"image/png"
 	"io/fs"
 	"math"
 	"os"
@@ -36,6 +34,7 @@ func LoadImage(path string) (image.Image, error) {
 	return img, err
 }
 
+/*
 func LoadPNG(path string) (image.Image, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -86,6 +85,7 @@ func SaveJPG(path string, img image.Image, quality int) error {
 
 	return file.Close()
 }
+*/
 
 func imageToRGBA(src image.Image) *image.RGBA {
 	bounds := src.Bounds()

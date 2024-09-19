@@ -1,10 +1,29 @@
 package main
 
 import (
+	"fmt"
+	"image"
+	"image/png"
 	"math"
+	"os"
 
 	"github.com/ccpaging/gg"
 )
+
+func savePNG(path string, img image.Image) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	err = png.Encode(file, img)
+	if err != nil {
+		return fmt.Errorf("could not encode PNG to %q: %w", path, err)
+	}
+
+	return file.Close()
+}
 
 func main() {
 	const W = 1200
@@ -25,5 +44,5 @@ func main() {
 	dc.SetHexColor("#19344180")
 	dc.SetLineWidth(8)
 	dc.Stroke()
-	dc.SavePNG("out.png")
+	savePNG("out.png", dc.Image())
 }
