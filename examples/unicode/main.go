@@ -1,6 +1,9 @@
 package main
 
-import "github.com/ccpaging/gg"
+import (
+	"github.com/ccpaging/gg"
+	"github.com/flopp/go-findfont"
+)
 
 func main() {
 	const S = 4096 * 2
@@ -10,7 +13,11 @@ func main() {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	dc.SetRGB(0, 0, 0)
-	if err := dc.LoadFontFace("Xolonium-Regular.ttf", F); err != nil {
+	fontPath, err := findfont.Find("Xolonium.ttf")
+	if err != nil {
+		panic(err)
+	}
+	if err := dc.LoadFontFace(fontPath, F); err != nil {
 		panic(err)
 	}
 	for r := 0; r < 256; r++ {

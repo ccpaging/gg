@@ -4,6 +4,7 @@ import (
 	"math/rand"
 
 	"github.com/ccpaging/gg"
+	"github.com/flopp/go-findfont"
 )
 
 func CreatePoints(n int) []gg.Point {
@@ -54,11 +55,22 @@ func main() {
 	// draw text
 	dc.Identity()
 	dc.SetRGB(0, 0, 0)
-	if err := dc.LoadFontFace("/Library/Fonts/Arial Bold.ttf", 24); err != nil {
+	fontPath, err := findfont.Find("Arial Bold.ttf")
+	if err != nil {
+		fontPath, err = findfont.Find("arialbd.ttf")
+		if err != nil {
+			panic(err)
+		}
+	}
+	if err := dc.LoadFontFace(fontPath, 24); err != nil {
 		panic(err)
 	}
 	dc.DrawStringAnchored("Chart Title", S/2, P/2, 0.5, 0.5)
-	if err := dc.LoadFontFace("/Library/Fonts/Arial.ttf", 18); err != nil {
+	fontPath, err = findfont.Find("Arial.ttf")
+	if err != nil {
+		panic(err)
+	}
+	if err := dc.LoadFontFace(fontPath, 18); err != nil {
 		panic(err)
 	}
 	dc.DrawStringAnchored("X Axis Title", S/2, S-P/2, 0.5, 0.5)

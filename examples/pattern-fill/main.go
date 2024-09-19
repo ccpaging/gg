@@ -3,7 +3,7 @@ package main
 import "github.com/ccpaging/gg"
 
 func main() {
-	img, err := gg.LoadPNG("examples/baboon.png")
+	img, err := gg.LoadPNG("../baboon.png")
 	if err != nil {
 		panic(err)
 	}

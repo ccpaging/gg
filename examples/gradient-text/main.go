@@ -4,6 +4,7 @@ import (
 	"image/color"
 
 	"github.com/ccpaging/gg"
+	"github.com/flopp/go-findfont"
 )
 
 const (
@@ -16,7 +17,11 @@ func main() {
 
 	// draw text
 	dc.SetRGB(0, 0, 0)
-	dc.LoadFontFace("/Library/Fonts/Impact.ttf", 128)
+	fontPath, err := findfont.Find("Impact.ttf")
+	if err != nil {
+		panic(err)
+	}
+	dc.LoadFontFace(fontPath, 128)
 	dc.DrawStringAnchored("Gradient Text", W/2, H/2, 0.5, 0.5)
 
 	// get the DeviceContext as an alpha mask

@@ -5,7 +5,7 @@ import "github.com/ccpaging/gg"
 func main() {
 	const NX = 4
 	const NY = 3
-	img, err := gg.LoadPNG("examples/gopher.png")
+	img, err := gg.LoadPNG("../gopher.png")
 	if err != nil {
 		panic(err)
 	}
